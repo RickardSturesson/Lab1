@@ -1,0 +1,31 @@
+{
+  "name": "lab1",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Lab1 for the full stack course",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RickardSturesson/Lab1.git"
+  },
+  "keywords": [
+    "lab1",
+    "MongodDB",
+    "fullStack"
+  ],
+  "author": "Rickard Sturesson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RickardSturesson/Lab1/issues"
+  },
+  "homepage": "https://github.com/RickardSturesson/Lab1#readme",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.2.4"
+  }
+}
