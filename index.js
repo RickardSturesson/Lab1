@@ -3,23 +3,31 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import { connectToMongo } from "./db/dbConnection.js";
 import Recipe from "./db/recipes.js";
+import cors from "cors";
+import path from 'path';
+import {fileURLToPath} from 'url';
 
-dotenv.config();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const app = express();
 
+dotenv.config();
+
+app.use(express.static("public"));
 app.use(express.json());
+app.use(cors());
 
 connectToMongo();
 
 app.get("/", (req, res) => {
-    res.send("Hello");
+    const filePath = path.join(__dirname, "public", "index.html")
+    res.sendFile(filePath);
 })
 
 app.get("/api/recipes", async (req, res) => {
     try {    
         const recipes = await Recipe.find();
-        res.status(200).json({message: recipes})
-        return recipes;
+        res.status(200).json({recipes: recipes});
     } catch(error) {
         res.status(404).status({message: "Not found"});
     };
@@ -32,8 +40,7 @@ app.get("/api/recipes/:title", async (req, res) => {
     const recipe = await Recipe.find({title: recipeTitle});
     
     if (recipe.length > 0) {
-        res.status(200).json({message: recipe});
-        return recipe
+        res.status(200).json({recipe: recipe});
     } else {
         res.status(404).json({message: "Not found"})
     }
