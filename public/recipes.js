@@ -61,18 +61,26 @@ document.addEventListener("DOMContentLoaded", async function () {
         const updateForm = document.getElementById("update-form");
         updateForm.dataset.recipeId = recipe._id;
         updateForm.addEventListener("submit", async (event) => {
+            event.preventDefault();
         
             const formData = new FormData(updateForm);
             const updatedRecipe = {};
 
+            const ingredientsString = formData.get("ingredients");
+            const ingredientsArray = ingredientsString.split(",").map(ingredient => ingredient.trim());
+    
+            updatedRecipe["ingredients"] = ingredientsArray;
+
             formData.forEach((value, key) => {
+                if (key !== "ingredients") {
                 updatedRecipe[key] = value;
+                }
             });
 
             const recipeId = updateForm.dataset.recipeId;
 
             try {
-                const response = await fetch(`http://localhost:3000/api/recipes/${recipeId}`,
+                const response = await fetch(`http://localhost:5000/api/recipes/${recipeId}`,
                 {
                     method: "PUT",
                     headers: {
@@ -82,19 +90,20 @@ document.addEventListener("DOMContentLoaded", async function () {
                 });
 
                 if (response.ok) {
+                    console.log(updatedRecipe);
                     console.log("Recipe updated");
                 } else {
                     console.error("Failed to update recipe");
                 }                
             } catch (error) {
-                log.error("Error while updating recipe", error);
+                console.error("Error while updating recipe", error);
             }
         })
     });
 
     async function createData() {
         try{
-            const response = await fetch("http://localhost:3000/api/recipes/");
+            const response = await fetch("http://localhost:5000/api/recipes/");
             const recipes = await response.json();
             console.log("Data fetched")
             return recipes.recipes;
@@ -105,7 +114,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     async function deleteRecipe(recipeId) {
         try {
-            const response = await fetch (`http://localhost:3000/api/recipes/${recipeId}`,
+            const response = await fetch (`http://localhost:5000/api/recipes/${recipeId}`,
             { method: "DELETE" }
             );
             console.log("Recipe removed");

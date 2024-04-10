@@ -10,10 +10,11 @@ import {fileURLToPath} from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express();
+const publicPath = path.join(__dirname, 'public');
 
 dotenv.config();
 
-app.use(express.static("public"));
+app.use(express.static(publicPath));
 app.use(express.json());
 app.use(cors());
 
