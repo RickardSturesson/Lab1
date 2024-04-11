@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", async function () {
     const recipes = await createData();
-    console.log(recipes);
 
     const recipeTable = document.getElementById("table-body");
 
@@ -38,30 +37,32 @@ document.addEventListener("DOMContentLoaded", async function () {
             document.getElementById("edit-ingredients").value = recipe.ingredients.join(", ");
             document.getElementById("edit-instructions").value = recipe.instructions;
             modal.showModal();
+            document.getElementById("update-form").dataset.recipeId = recipeId;
         });
 
         let deleteButton = document.createElement("button");
         deleteButton.textContent = "Delete";
         let deleteButtonCell = document.createElement("td");
         deleteButtonCell.appendChild(deleteButton);
+        rowInTable.appendChild(deleteButtonCell);
+
+        recipeTable.appendChild(rowInTable);
+
         deleteButton.addEventListener("click", async () => {
             if (confirm("This will delete the recipe.")) {
                 deleteRecipe(recipe._id);
                 rowInTable.remove();
             }
         });
-        rowInTable.appendChild(deleteButtonCell);
-        recipeTable.appendChild(rowInTable);
+    });
 
-        const cancelButton = document.getElementById("form-cancel-button");
+    const cancelButton = document.getElementById("form-cancel-button");
         cancelButton.addEventListener("click", () => {
-            modal.close();
+            document.getElementById("my-modal").close();
         })
 
         const updateForm = document.getElementById("update-form");
-        updateForm.dataset.recipeId = recipe._id;
         updateForm.addEventListener("submit", async (event) => {
-            event.preventDefault();
         
             const formData = new FormData(updateForm);
             const updatedRecipe = {};
@@ -98,8 +99,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             } catch (error) {
                 console.error("Error while updating recipe", error);
             }
-        })
-    });
+        });
 
     async function createData() {
         try{

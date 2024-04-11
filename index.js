@@ -57,6 +57,7 @@ app.post("/api/recipes", async (req, res) => {
     const instructions = req.body.instructions;
 
     if (!title || !cookingTime || !ingredients || !instructions) {
+        console.log("Fields are empty");
         return res.json({message: "Fields can not be empty"});
     }
 
@@ -72,13 +73,13 @@ app.post("/api/recipes", async (req, res) => {
         title: title
     });
 
-    console.log(newRecipe)
-
     try {
         const recipe = await newRecipe.save();
         res.status(201).json({message: recipe})
+        console.log("Recipe created")
         return recipe;
     } catch(error) {
+        console.error("Something went wrong while saving data", error);
         res.status(500).json({message: "Can not save data"})
     }
 });
@@ -89,6 +90,7 @@ app.put("/api/recipes/:id", async (req, res) => {
     try {
         let recipe = await Recipe.findById(id);
         if (!recipe) {
+            console.log("Could not find recipe")
             return res.status(404).json({message: "Recipe not found"})
         };
 
@@ -99,6 +101,7 @@ app.put("/api/recipes/:id", async (req, res) => {
         });
 
         recipe = await Recipe.findByIdAndUpdate(id, updatedRecipeData, {new: true});
+        console.log("Recipe updated", recipe)
         res.status(200).json({message: recipe})
     } catch (error) {
         console.log("Could not update recipe", error)

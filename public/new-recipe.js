@@ -31,6 +31,8 @@ document.addEventListener("DOMContentLoaded", async function () {
             if (response.ok) {
                 console.log(newRecipe);
                 console.log("Recipe created");
+                alert(`Recipe "${newRecipe["title"]}" has been created`);
+                window.location.href = "index.html"
             } else {
                 console.error("Failed to create recipe");
             }                
