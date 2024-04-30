@@ -114,7 +114,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     async function deleteRecipe(recipeId) {
         try {
-            const response = await fetch (`${process.env.API}${recipeId}`,
+            const response = await fetch (`${process.env.API}/${recipeId}`,
             { method: "DELETE" }
             );
             console.log("Recipe removed");
