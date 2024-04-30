@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         });
 
         try {
-            const response = await fetch("http://localhost:5000/api/recipes",
+            const response = await fetch("https://lab1-uf27.onrender.com/api/recipes",
             {
                 method: "POST",
                 headers: {

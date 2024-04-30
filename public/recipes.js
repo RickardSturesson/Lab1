@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             const recipeId = updateForm.dataset.recipeId;
 
             try {
-                const response = await fetch(`http://localhost:5000/api/recipes/${recipeId}`,
+                const response = await fetch(`https://lab1-uf27.onrender.com/api/recipes/${recipeId}`,
                 {
                     method: "PUT",
                     headers: {
@@ -103,7 +103,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     async function createData() {
         try{
-            const response = await fetch("http://localhost:5000/api/recipes/");
+            const response = await fetch("https://lab1-uf27.onrender.com/api/recipes/");
             const recipes = await response.json();
             console.log("Data fetched")
             return recipes.recipes;
@@ -114,7 +114,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     async function deleteRecipe(recipeId) {
         try {
-            const response = await fetch (`${process.env.API}/${recipeId}`,
+            const response = await fetch (`https://lab1-uf27.onrender.com/api/recipes/${recipeId}`,
             { method: "DELETE" }
             );
             console.log("Recipe removed");
